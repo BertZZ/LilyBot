@@ -40,6 +40,8 @@ class LilyBot
           write_to_chat("Current commands are: !about")
         elsif content.include? "!about"
           write_to_chat("This will be some information about Lily who is amazing and awesome")
+        elsif content.include? "!schedule"
+          write_to_chat("Lily will be streaming at 1pm Thursdays, Fridays and 10am Saturdays. All times GMT")
         end
       end
     end
