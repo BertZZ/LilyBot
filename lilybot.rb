@@ -37,7 +37,7 @@ class LilyBot
       if message.match(/PRIVMSG ##{@channel} :(.*)$/)
         content = $~[1]
         if content.include? "!commands"
-          write_to_chat("Current commands are: !about")
+          write_to_chat("Current commands are: !about, !schedule")
         elsif content.include? "!about"
           write_to_chat("This will be some information about Lily who is amazing and awesome")
         elsif content.include? "!schedule"
