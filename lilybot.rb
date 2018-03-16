@@ -1,6 +1,7 @@
 require 'socket'
 require 'httparty'
 require 'dotenv/load'
+require 'time'
 
 TWITCH_HOST = "irc.twitch.tv"
 TWITCH_PORT = 6667
@@ -9,7 +10,7 @@ class LilyBot
 
   def initialize
     @nickname = "lilpanthbot"
-    @botPassword = ENV['OAUTH_TOKEN'] #MoveToTokensFile
+    @botPassword = ENV['OAUTH_TOKEN']
     @channel = "lilpanther92"
     @socket = TCPSocket.open(TWITCH_HOST, TWITCH_PORT)
     callTwitch
@@ -54,7 +55,7 @@ class LilyBot
           elsif content.include? "!uptime"
             if @response['stream'].nil? == false
               format_time
-              write_to_chat("The stream has been live for #{time}")
+              write_to_chat("The Stream started at #{@parsedTime}. The stream has been live for #{@hours} hours, #{@minutes} minutes and #{@seconds} seconds")
             else
               write_to_chat("The stream is not live")
             end
@@ -64,7 +65,12 @@ class LilyBot
     end
 
     def format_time
-      time = returns string "X hours Y Minutes and Z seconds"
+      time = @response['stream']['created_at']
+      @parsedTime = Time.parse(time)
+      elapsedTimeSeconds = Time.now - @parsedTime
+      @hours = (elapsedTimeSeconds / 3600).to_i
+      @minutes = ((elapsedTimeSeconds % 3600) /60).to_i
+      @seconds = ((elapsedTimeSeconds % 3600) % 60).to_i
     end
 
     def quit
