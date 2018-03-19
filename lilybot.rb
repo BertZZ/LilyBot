@@ -13,7 +13,6 @@ class LilyBot
     @botPassword = ENV['OAUTH_TOKEN']
     @channel = "lilpanther92"
     @socket = TCPSocket.open(TWITCH_HOST, TWITCH_PORT)
-    callTwitch
     write_to_system "PASS #{@botPassword}"
     write_to_system "NICK #{@nickname}"
     write_to_system "USER #{@nickname} 0 * #{@nickname}"
@@ -29,10 +28,11 @@ class LilyBot
   end
 
   def callTwitch
-    @response = HTTParty.get('https://api.twitch.tv/kraken/streams/lilpanther92',
+    twitchResponse = HTTParty.get('https://api.twitch.tv/kraken/streams/lilpanther92',
     headers: {
       "Client-ID" => ENV['CLIENT_ID']
       })
+      return twitchResponse
     end
 
     def run
@@ -53,8 +53,9 @@ class LilyBot
           elsif content.include? "!schedule"
             write_to_chat("Lily will be streaming at 1pm Thursdays, Fridays and 10am Saturdays. All times GMT")
           elsif content.include? "!uptime"
-            if @response['stream'].nil? == false
-              format_time
+            response = callTwitch
+            if response['stream'].nil? == false #Try Stream Type. Look at continued response if Stream Type changeswhen stream is offline
+              format_time(response)
               write_to_chat("The Stream started at #{@parsedTime}. The stream has been live for #{@hours} hours, #{@minutes} minutes and #{@seconds} seconds")
             else
               write_to_chat("The stream is not live")
@@ -64,8 +65,8 @@ class LilyBot
       end
     end
 
-    def format_time
-      time = @response['stream']['created_at']
+    def format_time(response)
+      time = response['stream']['created_at']
       @parsedTime = Time.parse(time)
       elapsedTimeSeconds = Time.now - @parsedTime
       @hours = (elapsedTimeSeconds / 3600).to_i
