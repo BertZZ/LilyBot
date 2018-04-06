@@ -48,6 +48,8 @@ class LilyBot
           content = $~[1]
           if content.include? "!commands"
             write_to_chat("Current commands are: !about, !schedule")
+          elsif content.include? "!bot"
+            write_to_chat("This bot was written by BertZZ. Visit https://github.com/BertZZ to view the code and for examples of my other code")
           elsif content.include? "!about"
             write_to_chat("This will be some information about Lily who is amazing and awesome")
           elsif content.include? "!schedule"
