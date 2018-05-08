@@ -47,7 +47,7 @@ class LilyBot
         if message.match(/PRIVMSG ##{@channel} :(.*)$/)
           content = $~[1]
           if content.include? "!commands"
-            write_to_chat("Current commands are: !about, !schedule")
+            write_to_chat("Current commands are: !about, !schedule, !bot, !uptime and !8ball")
           elsif content.include? "!bot"
             write_to_chat("This bot was written by BertZZ. Visit https://github.com/BertZZ to view the code and for examples of my other code")
           elsif content.include? "!about"
@@ -58,7 +58,6 @@ class LilyBot
             response = callTwitch
             if response['stream'].nil? == false
               format_time(response)
-              write_to_chat("The Stream started at #{@parsedTime}. The stream has been live for #{@hours} hours, #{@minutes} minutes and #{@seconds} seconds")
             else
               write_to_chat("The stream is not live")
             end
@@ -74,6 +73,7 @@ class LilyBot
       @hours = (elapsedTimeSeconds / 3600).to_i
       @minutes = ((elapsedTimeSeconds % 3600) /60).to_i
       @seconds = ((elapsedTimeSeconds % 3600) % 60).to_i
+      write_to_chat("The Stream started at #{@parsedTime}. The stream has been live for #{@hours} hours, #{@minutes} minutes and #{@seconds} seconds")
     end
 
     def quit
