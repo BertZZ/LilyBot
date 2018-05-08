@@ -55,7 +55,11 @@ class LilyBot
           elsif content.include? "!schedule"
             write_to_chat("Lily will be streaming at 1pm Thursdays, Fridays and 10am Saturdays. All times GMT")
           elsif content.include? "!8ball"
-            eight_ball
+            if ( content =~ /[^.?]+\?/ )
+              eight_ball
+            else
+              write_to_chat("To use the 8 ball command please type !8ball followed by your question. Make sure to end your question with a question mark")
+            end
           elsif content.include? "!uptime"
             response = callTwitch
             if response['stream'].nil? == false
