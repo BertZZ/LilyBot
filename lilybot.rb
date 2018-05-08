@@ -54,6 +54,8 @@ class LilyBot
             write_to_chat("This will be some information about Lily who is amazing and awesome")
           elsif content.include? "!schedule"
             write_to_chat("Lily will be streaming at 1pm Thursdays, Fridays and 10am Saturdays. All times GMT")
+          elsif content.include? "!8ball"
+            eight_ball
           elsif content.include? "!uptime"
             response = callTwitch
             if response['stream'].nil? == false
@@ -75,6 +77,15 @@ class LilyBot
       @seconds = ((elapsedTimeSeconds % 3600) % 60).to_i
       write_to_chat("The Stream started at #{@parsedTime}. The stream has been live for #{@hours} hours, #{@minutes} minutes and #{@seconds} seconds")
     end
+
+    def eight_ball
+      answers = ["It is certain","It is decidedly so","Without a doubt","Yes definatly","You may rely on it","As I see it, Yes","Most likely",
+      "Outlook good","Yes","Reply hazy, Try again","Ask Again Later","Better not tell you now","Concentrate and ask again",
+      "Don't count on it","My reply is No","My sources say No","Outlook not so good","Very doubtful"]
+      answer = answers.sample
+      write_to_chat(answer)
+    end
+
 
     def quit
       write_to_chat "LilyBot Has Crashed"
