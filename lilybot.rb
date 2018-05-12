@@ -87,7 +87,7 @@ class LilyBot
       "Outlook good","Yes","Reply hazy, Try again","Ask Again Later","Better not tell you now","Concentrate and ask again",
       "Don't count on it","My reply is No","My sources say No","Outlook not so good","Very doubtful"]
       answer = answers.sample
-      write_to_chat(answer)
+      write_to_chat("The 8 ball says: #{answer}")
     end
 
 
