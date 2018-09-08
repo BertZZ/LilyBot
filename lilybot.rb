@@ -49,13 +49,15 @@ class LilyBot
         if message.match(/PRIVMSG ##{@channel} :(.*)$/)
           content = $~[1]
           if content.include? "!commands"
-            write_to_chat("Current commands are: !about, !schedule, !bot, !uptime and !8ball")
+            write_to_chat("Current commands are: !about, !schedule, !bot, !uptime, !social and !8ball")
           elsif content.include? "!bot"
             write_to_chat("This bot was written by BertZZ. Visit https://github.com/BertZZ to view the code and for examples of my other code")
           elsif content.include? "!about"
             write_to_chat("This will be some information about Lily who is amazing and awesome")
           elsif content.include? "!schedule"
             write_to_chat("Lily will be streaming at 1pm Fridays and Saturdays. All times GMT")
+          elsif content.include? "!social"
+            write_to_chat("Follow Lily on Twitter: @xxLilPantherxx and on Instagram: lilyjeantea")
           elsif content.include? "!8ball"
             if ( content =~ /[^.?]+\?/ )
               answer = @eight_ball.shake
